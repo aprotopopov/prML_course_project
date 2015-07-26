@@ -1,0 +1,37 @@
+---
+title: "Practical machine learning course project"
+author: "Anton Protopopov"
+output: pdf_document
+---
+
+--- 
+
+We will consider data about human activity recognition research. You could take a look to [short description](http://groupware.les.inf.puc-rio.br/har)   of dataset or to [full article](http://groupware.les.inf.puc-rio.br/public/papers/2013.Velloso.QAR-WLE.pdf)
+
+The goal of our project is to predict the manner in which our participants did the exercise.
+
+
+```{r, echo=FALSE}
+train <- read.csv("~/data_science/prML/pml-training.csv")
+test <- read.csv("~/data_science/prML/pml-testing.csv")
+```
+
+First approach:
+
+```{r full_model, echo=FALSE, eval=FALSE}
+library(lattice)
+library(ggplot2)
+library(caret)
+fitMod <- train(factor(classe) ~ ., data=train, method="gbm", model=F)
+```
+
+
+To be continued...
+
+*******
+# Appendix
+
+Codes. 
+
+```{r full_model, eval=FALSE}
+```
