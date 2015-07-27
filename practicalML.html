@@ -83,7 +83,8 @@ trainMod &lt;- trainMod[,!grepl(&quot;var&quot;, names(trainMod))]</code></pre>
 ##  FALSE 
 ## 941856</code></pre>
 <p>First approach, with random forest:</p>
-<pre class="r"><code>fitMod &lt;- train(factor(classe) ~ ., data=trainMod, method=&quot;rf&quot;, prox=TRUE)</code></pre>
+<pre class="r"><code>fitMod &lt;- train(factor(classe) ~ ., data=trainMod, method=&quot;rf&quot;, 
+  trControl = trainControl(method=&quot;cv&quot;), number=3)</code></pre>
 <p>To be continued…</p>
 <p>Unfortunately my computer is slow (1 core 1.6GHz) and I didn’t have enough time to do all project to the deadline..</p>
 <hr />

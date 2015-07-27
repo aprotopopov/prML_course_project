@@ -1,7 +1,7 @@
 ---
 title: "Practical machine learning course project"
 author: "Anton Protopopov"
-output: html_document
+output: pdf_document
 ---
 
 --- 
@@ -44,7 +44,8 @@ library(caret)
 ```
 
 ```{r full_model, eval=FALSE}
-fitMod <- train(factor(classe) ~ ., data=trainMod, method="rf", prox=TRUE)
+fitMod <- train(factor(classe) ~ ., data=trainMod, method="rf", 
+  trControl = trainControl(method="cv"), number=3)
 ```
 
 To be continued...
