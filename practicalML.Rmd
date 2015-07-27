@@ -1,7 +1,7 @@
 ---
 title: "Practical machine learning course project"
 author: "Anton Protopopov"
-output: pdf_document
+output: html_document
 ---
 
 --- 
@@ -16,22 +16,42 @@ train <- read.csv("~/data_science/prML/pml-training.csv")
 test <- read.csv("~/data_science/prML/pml-testing.csv")
 ```
 
-First approach:
+If we will take a look to our dataset via `str` command we will able to see that some of our variables have NA values. Let's decrease number of vartiables in our prediction model, we will take into account variables containing gyros, accel and magnet, first 7 (username, X, times), and classe and exclude variables containing var:
 
-```{r full_model, echo=FALSE, eval=FALSE}
+```{r}
+trainMod <- train[,1:7]
+trainMod <- cbind(trainMod, train[, grepl("accel|gyros|magnet", names(train))])
+trainMod$classe <- train$classe
+trainMod <- trainMod[,!grepl("var", names(trainMod))]
+```
+
+Now we have dataset with size:
+```{r , ehco=FALSE}
+dim(trainMod)
+```
+
+We could see that dataset doesn't contain any NA values:
+```{r}
+table(sapply(trainMod, is.na))
+```
+
+First approach, with random forest:
+
+```{r, echo=FALSE}
 library(lattice)
 library(ggplot2)
 library(caret)
-fitMod <- train(factor(classe) ~ ., data=train, method="gbm", model=F)
 ```
 
+```{r full_model, eval=FALSE}
+fitMod <- train(factor(classe) ~ ., data=trainMod, method="rf", prox=TRUE)
+```
 
 To be continued...
+
+Unfortunately my computer is slow (1 core 1.6GHz) and I didn't have enough time to do all project to the deadline.. 
 
 *******
 # Appendix
 
 Codes. 
-
-```{r full_model, eval=FALSE}
-```

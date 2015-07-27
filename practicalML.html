@@ -69,16 +69,27 @@ img {
 <hr />
 <p>We will consider data about human activity recognition research. You could take a look to <a href="http://groupware.les.inf.puc-rio.br/har">short description</a> of dataset or to <a href="http://groupware.les.inf.puc-rio.br/public/papers/2013.Velloso.QAR-WLE.pdf">full article</a></p>
 <p>The goal of our project is to predict the manner in which our participants did the exercise.</p>
-<p>First approach:</p>
+<p>If we will take a look to our dataset via <code>str</code> command we will able to see that some of our variables have NA values. Let’s decrease number of vartiables in our prediction model, we will take into account variables containing gyros, accel and magnet, first 7 (username, X, times), and classe and exclude variables containing var:</p>
+<pre class="r"><code>trainMod &lt;- train[,1:7]
+trainMod &lt;- cbind(trainMod, train[, grepl(&quot;accel|gyros|magnet&quot;, names(train))])
+trainMod$classe &lt;- train$classe
+trainMod &lt;- trainMod[,!grepl(&quot;var&quot;, names(trainMod))]</code></pre>
+<p>Now we have dataset with size:</p>
+<pre class="r"><code>dim(trainMod)</code></pre>
+<pre><code>## [1] 19622    48</code></pre>
+<p>We could see that dataset doesn’t contain any NA values:</p>
+<pre class="r"><code>table(sapply(trainMod, is.na))</code></pre>
+<pre><code>## 
+##  FALSE 
+## 941856</code></pre>
+<p>First approach, with random forest:</p>
+<pre class="r"><code>fitMod &lt;- train(factor(classe) ~ ., data=trainMod, method=&quot;rf&quot;, prox=TRUE)</code></pre>
 <p>To be continued…</p>
+<p>Unfortunately my computer is slow (1 core 1.6GHz) and I didn’t have enough time to do all project to the deadline..</p>
 <hr />
 <div id="appendix" class="section level1">
 <h1>Appendix</h1>
 <p>Codes.</p>
-<pre class="r"><code>library(lattice)
-library(ggplot2)
-library(caret)
-fitMod &lt;- train(factor(classe) ~ ., data=train, method=&quot;gbm&quot;, model=F)</code></pre>
 </div>
 
 
